@@ -35,17 +35,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/actuator/health").permitAll()
                     .antMatchers("/v2/api-docs").permitAll()
                     .antMatchers("/swagger*/**").permitAll()
-                    .antMatchers(HttpMethod.GET, "/api/users").hasRole("Administrator")
-                    .antMatchers(HttpMethod.GET, "/api/users/[a-zA-Z0-9]+").authenticated()
-                    .antMatchers(HttpMethod.POST, "/api/users").hasRole("Administrator")
-                    .antMatchers(HttpMethod.PUT, "/api/users").authenticated()
-                    .antMatchers(HttpMethod.DELETE, "/api/users").authenticated()
+                    .antMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/api/users/*").authenticated()
+                    .antMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.PUT, "/api/users/*").authenticated()
+                    .antMatchers(HttpMethod.DELETE, "/api/users/*").authenticated()
 
                     .antMatchers(HttpMethod.GET, "/api/posts").authenticated()
-                    .antMatchers(HttpMethod.GET, "/api/posts/[a-zA-Z0-9]+").authenticated()
+                    .antMatchers(HttpMethod.GET, "/api/posts/*").authenticated()
                     .antMatchers(HttpMethod.POST, "/api/posts").authenticated()
-                    .antMatchers(HttpMethod.PUT, "/api/posts").authenticated()
-                    .antMatchers(HttpMethod.DELETE, "/api/posts").authenticated()
+                    .antMatchers(HttpMethod.PUT, "/api/posts/*").authenticated()
+                    .antMatchers(HttpMethod.DELETE, "/api/posts/*").authenticated()
                 .and()
                     .formLogin()
                     .permitAll()
@@ -61,11 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withDefaultPasswordEncoder()
                 .username("blogger").password("blogger")
-                .roles("Blogger").build());
+                .roles("BLGR").build());
 
         manager.createUser(User.withDefaultPasswordEncoder()
                 .username("admin").password("admin")
-                .roles("Administrator").build());
+                .roles("ADMIN").build());
         return manager;
     }
 
