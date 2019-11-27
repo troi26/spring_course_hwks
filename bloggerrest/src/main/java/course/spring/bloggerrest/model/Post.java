@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,5 +33,7 @@ public class Post {
     @URL
     private String imageUrl;
     @NonNull
-    private String status = "active";
+    @Pattern(regexp = "ACTIVE|INACTIVE",
+            message = "Status can be set only to ACTIVE or INACTIVE")
+    private String status = "ACTIVE";
 }

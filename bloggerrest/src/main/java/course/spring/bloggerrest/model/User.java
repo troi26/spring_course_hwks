@@ -39,7 +39,9 @@ public class User {
     private String password;
     @NonNull
     @NotNull
-    private String role = "Blogger";
+    @Pattern(regexp = "ADMIN|BLOGGER",
+            message = "User`s role can be set only to ADMIN or BLOGGER")
+    private String role;
     @URL
     private String avatar;
 }
