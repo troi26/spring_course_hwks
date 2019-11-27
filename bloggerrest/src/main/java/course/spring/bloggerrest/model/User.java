@@ -1,6 +1,7 @@
 package course.spring.bloggerrest.model;
 
 import lombok.*;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,7 +9,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.net.URL;
 
 @Document("users")
 @Data
@@ -20,11 +20,11 @@ public class User {
     private String id;
     @NonNull
     @NotNull
-    @Size(min = 5)
+    @Size(min = 1)
     private String name;
     @NonNull
     @NotNull
-    @Size(min = 5)
+    @Size(min = 1)
     private String surname;
     @NonNull
     @NotNull
@@ -33,10 +33,13 @@ public class User {
     @NonNull
     @NotNull
     @Size(min=6)
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,}$")
+    @Pattern(regexp = "(?=^.{6,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$",
+            message = "Password must be at least 6 symbols long, containing at least one of lowercase," +
+                    " uppercase letters, digit and a special symbol")
     private String password;
     @NonNull
     @NotNull
     private String role = "Blogger";
-    private URL avatar;
+    @URL
+    private String avatar;
 }
