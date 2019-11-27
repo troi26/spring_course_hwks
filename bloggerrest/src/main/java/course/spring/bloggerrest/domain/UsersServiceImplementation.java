@@ -27,8 +27,8 @@ public class UsersServiceImplementation implements UsersService {
     }
 
     @Override
-    public User add(User post) {
-        return repo.insert(post);
+    public User add(User user) {
+        return repo.insert(user);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UsersServiceImplementation implements UsersService {
 
         if (!old.isPresent()) {
             throw new InvalidEntityException(
-                    String.format("Post with ID=\"%s\" does not exist.", user.getId()));
+                    String.format("User with ID=\"%s\" does not exist.", user.getId()));
         }
 
         return repo.save(user);
