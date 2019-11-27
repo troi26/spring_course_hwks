@@ -1,5 +1,5 @@
 # (Задача 1): Blogger REST API
-##(5% от крайната оценка)
+**(5% от крайната оценка)**
 
 Да се реализира със Spring 5 платформа + Spring Boot + Spring Data Mongo уеб услуга - Blogger REST API в стил Representational State Transfer (REST API). Реализираната REST услуга следва да предлага Create-Read-Update-Delete (CRUD) функционалност за блог постовете от Задача 1, както и за управление на потребителите:
 
@@ -17,7 +17,7 @@ User - с атрибути: идентификатор, име, фамилия, 
 | Posts	| GET Posts и POST нов Post (Id се попълва автоматично от API и модифицираните данни за създадения Blog Post се връщат като резултат на POST заявката). | /api/posts | 10 точки
 | Post | GET, PUT, DELETE Post Data за Post с посочено postId. Потребителят с роля Blogger може да модифицира и изтрива само своите постове. | /api/posts/{postId} | 10 точки
 
-####Упътване:
+**Упътване:**
 
 Реализирайте collection level resources: /api/posts и /api/users, към които отиват collection GET и POST заявките. В отоговор на POST заявка следва REST endpoint-a да върне HTTP статус: 201 Created с header Location, който да връща individual level resource URI на новосъздадения ресурс - напр: /api/posts/16, ако новият ресурс има ID=16.
 Реализирайте individual level resource: /api/posts/{postId} и /api/users/{userId}, към които отиват read (GET), update (PUT) и delete (DELETE) заявките.
