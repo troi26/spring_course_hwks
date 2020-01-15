@@ -17,10 +17,6 @@
                 <li th:if="${logged.roles.contains('ROLE_ADMIN')}" class="nav-item" th:class="${path == '/users/user-form'}? 'nav-item active' : 'nav-item'">
                     <a class="nav-link" href="/users/user-form">Add User</a></li>
             </ul>
-            <form class="search-form form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
             <form class="language-form form-inline my-2 my-lg-0">
                 <div class="form-group language-selector">
                     <label for="locales" class="menu-label col-form-label">Language</label>
