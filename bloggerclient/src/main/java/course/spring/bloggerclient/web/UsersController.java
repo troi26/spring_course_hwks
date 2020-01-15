@@ -2,6 +2,7 @@ package course.spring.bloggerclient.web;
 
 import course.spring.bloggerclient.domain.UsersService;
 import course.spring.bloggerclient.exception.InvalidEntityException;
+import course.spring.bloggerclient.exception.NonexisitngEntityException;
 import course.spring.bloggerclient.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,12 +99,11 @@ public class UsersController {
         User logged = (User) auth.getPrincipal();
         model.addAttribute("logged", logged);
 
-        System.out.println(user.getPassword());
-
         if (errors.hasErrors()) {
             model.addAttribute("fileError", null);
             return "user-form";
         } else {
+
             if (!file.isEmpty() && file.getOriginalFilename().length() > 0) {
                 if (Pattern.matches(".+\\.(jpg|png|jpeg)", file.getOriginalFilename())) {
                     handleMultipartFile(file);
@@ -115,7 +115,13 @@ public class UsersController {
             }
 
             if (user.getId() == null) { // Create new user
-                service.add(user);
+                try {
+                    service.findByEmail(user.getEmail());
+                    model.addAttribute("emailError", "Account with this e-mail already exists!");
+                    return "user-form";
+                } catch (NonexisitngEntityException ex) {
+                    service.add(user);
+                }
             } else { // user
                 if (file.isEmpty()) { // Check if new file has been uploaded!!!
                     user.setAvatarUrl(service.findById(user.getId()).getAvatarUrl());

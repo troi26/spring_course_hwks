@@ -50,6 +50,9 @@
                class="errors alert alert-danger offset-sm-2 col-sm-10">
                 Email should not be blank.
             </p>
+            <p th:if="${emailError != null}" class="errors alert alert-danger offset-sm-2 col-sm-10">
+                <span th:text="${emailError}"></span>
+            </p>
 
             <div class="form-group row">
                 <label path="password" class="col-sm-2 col-form-label">Password</label>
