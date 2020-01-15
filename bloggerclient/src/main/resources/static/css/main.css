@@ -33,3 +33,15 @@ h3 {
 .middle-vert-align {
     vertical-align: middle !important;
 }
+
+td {
+    border-left: 1px darkgrey solid;
+}
+
+tbody {
+    border-bottom: 1px darkgrey solid;
+    border-right: 1px darkgrey solid;
+}
+.centered-text {
+    text-align: center;
+}
