@@ -48,9 +48,13 @@ public class UsersController {
     public String updateUser(
             @ModelAttribute("edit") String userId,
             @ModelAttribute("delete") String deleteId,
-            Model model) {
+            Model model,
+            Authentication auth) {
         if (!deleteId.equals("")) {
             service.remove(deleteId);
+            if (((User) auth.getPrincipal()).getId().equals(deleteId)) {
+                return "redirect:/logout";
+            }
             return "redirect:/users";
         }
 
