@@ -23,7 +23,7 @@
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
-               class="errors alert alert-danger offset-sm-2 col-sm-10">
+               class="errors alert alert-warning offset-sm-2 col-sm-10">
                 Title should not be blank.
             </p>
 
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('text')}" th:errors="*{text}"
-               class="errors alert alert-danger offset-sm-2 col-sm-10">
+               class="errors alert alert-warning offset-sm-2 col-sm-10">
                 Text should not be blank.
             </p>
 
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('keyWords')}" th:errors="*{keyWords}"
-               class="errors alert alert-danger offset-sm-2 col-sm-10">
+               class="errors alert alert-warning offset-sm-2 col-sm-10">
                 Keywords should not be blank.
             </p>
 
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('status')}" th:errors="*{status}"
-               class="errors alert alert-danger offset-sm-2 col-sm-10">
+               class="errors alert alert-warning offset-sm-2 col-sm-10">
                 Incorrect status
             </p>
 
@@ -88,7 +88,7 @@
                     </div>
                 </div>
             </div>
-            <p th:if="${fileError != null}" class="errors alert alert-danger offset-sm-2 col-sm-10">
+            <p th:if="${fileError != null}" class="errors alert alert-warning offset-sm-2 col-sm-10">
                 <span th:text="${fileError}"></span>
             </p>
 

@@ -23,7 +23,7 @@
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-               class="errors alert alert-danger offset-sm-2 col-sm-10">
+               class="errors alert alert-warning offset-sm-2 col-sm-10">
                 Incorrect name
             </p>
 
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"
-               class="errors alert alert-danger offset-sm-2 col-sm-10">
+               class="errors alert alert-warning offset-sm-2 col-sm-10">
                 Surname should not be blank.
             </p>
 
@@ -47,10 +47,10 @@
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-               class="errors alert alert-danger offset-sm-2 col-sm-10">
+               class="errors alert alert-warning offset-sm-2 col-sm-10">
                 Email should not be blank.
             </p>
-            <p th:if="${emailError != null}" class="errors alert alert-danger offset-sm-2 col-sm-10">
+            <p th:if="${emailError != null}" class="errors alert alert-warning offset-sm-2 col-sm-10">
                 <span th:text="${emailError}"></span>
             </p>
 
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-               class="errors alert alert-danger offset-sm-2 col-sm-10">
+               class="errors alert alert-warning offset-sm-2 col-sm-10">
                 Password error
             </p>
         <div class="form-group row">
@@ -85,7 +85,7 @@
             </div>
         </div>
             <p th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"
-               class="errors alert alert-danger offset-sm-2 col-sm-10">
+               class="errors alert alert-warning offset-sm-2 col-sm-10">
                 Incorrect status
             </p>
 
@@ -100,7 +100,7 @@
                     </div>
                 </div>
             </div>
-            <p th:if="${fileError != null}" class="errors alert alert-danger offset-sm-2 col-sm-10">
+            <p th:if="${fileError != null}" class="errors alert alert-warning offset-sm-2 col-sm-10">
                 <span th:text="${fileError}"></span>
             </p>
 
