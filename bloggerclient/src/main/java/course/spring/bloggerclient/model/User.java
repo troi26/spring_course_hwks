@@ -15,7 +15,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
@@ -39,22 +38,16 @@ public class User implements UserDetails {
     @NonNull
     @NotNull
     @Email
+    @Size(min = 1)
     private String email;
     @NonNull
     @NotNull
-    @Pattern(regexp = "((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6,16})")
+    @Pattern(regexp = "((?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$&%]).{5,16})")
     @JsonProperty(access = WRITE_ONLY)
     private String password;
-//    @Pattern(regexp = "((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6,16})")
-////    @Pattern(regexp = "(?=^.{6,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$",
-////            message = "Password must be at least 6 symbols long, containing at least one of lowercase," +
-////                    " uppercase letters, digit and a special symbol")
-//    private String password;
     @NonNull
     @NotNull
-//    @Pattern(regexp = "ROLE_ADMIN|ROLE_BLOGGER",
-//            message = "User`s role can be set only to ADMIN or BLOGGER")
-    private String roles;
+    private String roles = "ROLE_ADMIN";
     private boolean active = true;
     @URL
     private String avatarUrl;

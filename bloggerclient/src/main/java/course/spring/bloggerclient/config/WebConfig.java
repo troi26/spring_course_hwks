@@ -35,7 +35,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("redirect:posts");
-//        registry.addViewController("/home").setViewName("home");
     }
 
     @Bean

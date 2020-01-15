@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head('Articles List')" />
 <body>
-    <div th:replace="fragments/menu :: menu(${path})" />
+    <div th:replace="fragments/menu :: menu(${path}, ${logged})" />
     <div class="container">
         <h3>Posts List</h3>
         <table class="article-table table table-striped">
@@ -23,7 +23,7 @@
                     <td class="middle-vert-align" th:text="${rowStat.index + 1}"></td>
                     <td class="middle-vert-align" th:text="${row.title}"></td>
                     <td class="middle-vert-align" th:text="${row.author.toString()}"></td>
-                    <td th:text="${row.text}"></td>
+                    <td th:text="${row.text.length() > 150} ? ${row.text.substring(0, 150)} : ${row.text}"></td>
                     <td th:text="${#strings.listJoin(row.keyWords, ', ')}"></td>
                     <td class="middle-vert-align" th:text="${row.publicityTime}"></td>
                     <td class="middle-vert-align" th:text="${row.status ? 'Active' : 'Disabled'}"></td>

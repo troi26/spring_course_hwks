@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/posts")
@@ -28,14 +29,17 @@ public class PostsController {
     @Autowired
     private PostsService service;
 
-//    @GetMapping
-//    List<Post> getPosts() {
-//        return service.findAll();
-//    }
     @GetMapping
-    public String getPosts(Model model) {
+    public String getPosts(Model model,
+                             Authentication auth) {
         model.addAttribute("path", "posts");
-        model.addAttribute("posts", service.findAll());
+        model.addAttribute("posts", service.findAll().stream()
+                .sorted((p1, p2) -> -p1.getPublicityTime().compareTo(p2.getPublicityTime()))
+                .limit(15)
+                .collect(Collectors.toList()));
+        User logged = (User) auth.getPrincipal();
+        model.addAttribute("logged", logged);
+
         return "posts";
     }
 
@@ -52,7 +56,6 @@ public class PostsController {
         model.addAttribute("path", "posts/post-form");
         model.addAttribute("mode", "edit");
         model.addAttribute("post", service.findById(postId));
-        Post post = service.findById(postId);
         return "redirect:/posts/post-form?mode=edit&post=" + postId;
     }
 
@@ -60,9 +63,13 @@ public class PostsController {
     public ModelAndView getPostForm (
             @ModelAttribute("post") Post post,
             @RequestParam(value = "mode", required = false) String mode,
-            @RequestParam(value = "post", required = false) String postId) {
+            @RequestParam(value = "post", required = false) String postId,
+            Authentication auth) {
         String title = "Add new post";
         ModelAndView result = new ModelAndView("post-form");
+        User logged = (User) auth.getPrincipal();
+        result.addObject("logged", logged);
+
         if ("edit".equals(mode)) {
             title = "Edit post";
             Post editPost = service.findById(postId);
@@ -70,13 +77,13 @@ public class PostsController {
             result.addObject("path", MvcUriComponentsBuilder
                     .fromMethodName(PostsController.class,
                             "getPostForm",
-                            editPost, "", "").build().getPath());
+                            editPost, "", "", auth).build().getPath());
         } else {
             result.addObject("title", title);
             result.addObject("path", MvcUriComponentsBuilder
                     .fromMethodName(PostsController.class,
                             "getPostForm",
-                            new Post(), "", "").build().getPath());
+                            new Post(), "", "", auth).build().getPath());
 
         }
 //        Log.info("PATH: );
@@ -85,11 +92,13 @@ public class PostsController {
 
 
     @PostMapping("/post-form")
-    public String addArticle(@Valid @ModelAttribute("post") Post post,
+    public String addPost(@Valid @ModelAttribute("post") Post post,
                              BindingResult errors,
                              @RequestParam("file") MultipartFile file,
                              Model model,
                              Authentication auth) {
+        User logged = (User) auth.getPrincipal();
+        model.addAttribute("logged", logged);
         if (errors.hasErrors()) {
             model.addAttribute("fileError", null);
             return "post-form";
@@ -139,49 +148,4 @@ public class PostsController {
             System.out.printf("ERROR copying file!!! %s [%d]", path, file.getSize());
         }
     }
-
-//    @GetMapping("{postId}")
-//    Post getPostById(@PathVariable("postId") String postId) {
-//        return service.findById(postId);
-//    }
-//
-//    @PostMapping
-//    ResponseEntity<Post> addPost(@Valid @RequestBody Post post, BindingResult bindingResult) {
-//        if (bindingResult.hasFieldErrors()) {
-//            String message = bindingResult.getFieldErrors().stream()
-//                    .map(err -> String.format("Invalid %s -> %s\n",
-//                            err.getField(), err.getDefaultMessage()))
-//                    .reduce("", (acc, err) -> acc + err);
-//
-//            throw new InvalidEntityException(message);
-//        }
-//        Post created = service.add(post);
-//        return ResponseEntity.created(
-//                ServletUriComponentsBuilder.fromCurrentRequest()
-//                        .pathSegment("{id}").build(created.getId())).body(created);
-//    }
-//
-//    @PutMapping("{postId}")
-//    public Post update (@PathVariable String postId, @Valid @RequestBody Post post, BindingResult bindingResult) {
-//        if (bindingResult.hasFieldErrors()) {
-//            String message = bindingResult.getFieldErrors().stream()
-//                    .map(err -> String.format("Invalid %s -> %s\n",
-//                            err.getField(), err.getDefaultMessage()))
-//                    .reduce("", (acc, err) -> acc + err);
-//
-//            throw new InvalidEntityException(message);
-//        }
-//        if (!postId.equals(post.getId())) {
-//            throw new InvalidEntityException(
-//                    String.format("Entity ID=\"%s\" is different from URL resource ID\"%s\"",
-//                            post.getId(), postId));
-//        }
-//        return service.update(post);
-//    }
-//
-//    @DeleteMapping("{postId}")
-//    public Post delete (@PathVariable String postId) {
-//        return service.remove(postId);
-//    }
-
 }

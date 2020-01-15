@@ -2,68 +2,68 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head('Users List')" />
 <body>
-<div th:replace="fragments/menu :: menu(${path})" />
-<div class="container">
-    <h3>Users List</h3>
-    <table class="article-table table table-striped">
-        <thead>
-        <th th:text="#{lbl.number}">Number</th>
-        <th th:text="#{lbl.user.name}">Name</th>
-        <th th:text="#{lbl.user.surname}">Surname</th>
-        <th th:text="#{lbl.user.email}">E-mail</th>
-        <th th:text="#{lbl.user.role}">Role</th>
-        <th th:text="#{lbl.user.status}">Status</th>
-        <th th:text="#{lbl.user.photo}">Photo</th>
-        <th th:text="#{lbl.options}">Options</th>
-        </thead>
-        <tbody>
-        <form method="post">
-            <tr th:each="row, rowStat : ${users}">
-                <td class="middle-vert-align" th:text="${rowStat.index + 1}"></td>
-                <td class="middle-vert-align" th:text="${row.name}"></td>
-                <td class="middle-vert-align" th:text="${row.surname}"></td>
-                <td class="middle-vert-align" th:text="${row.email}"></td>
-                <td class="middle-vert-align" th:text="${row.roles.contains('ROLE_ADMIN') ? 'Admin' : 'Regular'}"></td>
-                <td class="middle-vert-align" th:text="${row.active ? 'acitve' : 'inactive'}"></td>
-                <td class="middle-vert-align">
-                    <a href="#"  data-toggle="modal" data-target="#exampleModal"
-                       th:data-image-url="${'/uploads/' + row.avatarUrl}"
-                       th:data-image-title="${row.name}">
-                        <img class="img-thumbnail" th:if="${row.avatarUrl != null}"
-                             th:src="${'/uploads/' + row.avatarUrl}">
-                    </a>
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-primary" name="edit" th:value="${row.id}"><i class="fas fa-edit"></i></button>
-                    <button type="submit" class="btn btn-danger" name="delete" th:value="${row.id}"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-        </form>
-        </tbody>
-    </table>
-</div>
+    <div th:replace="fragments/menu :: menu(${path}, ${logged})" />
+    <div class="container">
+        <h3>Users List</h3>
+        <table class="article-table table table-striped">
+            <thead>
+            <th th:text="#{lbl.number}">Number</th>
+            <th th:text="#{lbl.user.name}">Name</th>
+            <th th:text="#{lbl.user.surname}">Surname</th>
+            <th th:text="#{lbl.user.email}">E-mail</th>
+            <th th:text="#{lbl.user.role}">Role</th>
+            <th th:text="#{lbl.user.status}">Status</th>
+            <th th:text="#{lbl.user.photo}">Photo</th>
+            <th th:text="#{lbl.options}">Options</th>
+            </thead>
+            <tbody>
+            <form method="post">
+                <tr th:each="row, rowStat : ${users}">
+                    <td class="middle-vert-align" th:text="${rowStat.index + 1}"></td>
+                    <td class="middle-vert-align" th:text="${row.name}"></td>
+                    <td class="middle-vert-align" th:text="${row.surname}"></td>
+                    <td class="middle-vert-align" th:text="${row.email}"></td>
+                    <td class="middle-vert-align" th:text="${row.roles.contains('ROLE_ADMIN') ? 'Admin' : 'Regular'}"></td>
+                    <td class="middle-vert-align" th:text="${row.active ? 'acitve' : 'inactive'}"></td>
+                    <td class="middle-vert-align">
+                        <a href="#"  data-toggle="modal" data-target="#exampleModal"
+                           th:data-image-url="${'/uploads/' + row.avatarUrl}"
+                           th:data-image-title="${row.name}">
+                            <img class="img-thumbnail" th:if="${row.avatarUrl != null}"
+                                 th:src="${'/uploads/' + row.avatarUrl}">
+                        </a>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" name="edit" th:value="${row.id}"><i class="fas fa-edit"></i></button>
+                        <button type="submit" class="btn btn-danger" name="delete" th:value="${row.id}"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+            </form>
+            </tbody>
+        </table>
+    </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <img class="img-fluid" src="#" alt="">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img class="img-fluid" src="#" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<div th:replace="fragments/foot :: foot" />
+    <div th:replace="fragments/foot :: foot" />
 </body>
 </html>

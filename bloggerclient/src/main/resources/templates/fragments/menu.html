@@ -1,4 +1,4 @@
-<div th:fragment="menu(path)" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="menu(path, logged)" xmlns:th="http://www.thymeleaf.org">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -14,22 +14,8 @@
                 </li>
                 <li class="nav-item" th:class="${path == '/posts/post-form'}? 'nav-item active' : 'nav-item'">
                     <a class="nav-link" href="/posts/post-form">Add Post</a></li>
-                <li class="nav-item" th:class="${path == '/users/user-form'}? 'nav-item active' : 'nav-item'">
+                <li th:if="${logged.roles.contains('ROLE_ADMIN')}" class="nav-item" th:class="${path == '/users/user-form'}? 'nav-item active' : 'nav-item'">
                     <a class="nav-link" href="/users/user-form">Add User</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
             </ul>
             <form class="search-form form-inline">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -44,6 +30,18 @@
                     </select>
                 </div>
             </form>
+            <ul class="navbar-nav ml-auto p-2">
+                <img class="navbar-avatar rounded-circle ml-auto p-2" style="max-height: 64px; height: 64px; width: 64px;"
+                     th:if="${logged.avatarUrl != null}"
+                     th:src="${'/uploads/' + logged.avatarUrl}" />
+                <li class="nav-item align-self-center">
+                    <span class="align-middle" style="height: 100%;"
+                          th:text="${logged.name} + ' ' + ${logged.surname}"></span>
+                </li>
+                <li class="nav-item align-self-center">
+                    <a class="nav-link" href="/logout" tabindex="-1" aria-disabled="true">Logout</a>
+                </li>
+            </ul>
         </div>
     </nav>
 </div>

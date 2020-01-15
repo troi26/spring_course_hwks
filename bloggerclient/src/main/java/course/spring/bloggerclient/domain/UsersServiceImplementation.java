@@ -5,6 +5,7 @@ import course.spring.bloggerclient.exception.NonexisitngEntityException;
 import course.spring.bloggerclient.model.User;
 import course.spring.bloggerclient.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class UsersServiceImplementation implements UsersService {
     UsersRepository repo;
 
     @Override
+    @PostFilter("hasRole('ADMIN') or filterObject.email == authentication.principal.email")
     public List<User> findAll() {
         return repo.findAll();
     }
@@ -38,7 +40,7 @@ public class UsersServiceImplementation implements UsersService {
     @Override
     public User add(User user) {
         if(user.getRoles() == null || user.getRoles().trim().length() == 0) {
-            user.setRoles("ROLE_AUTHOR");
+            user.setRoles("ROLE_BLOGGER");
         }
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
@@ -54,6 +56,9 @@ public class UsersServiceImplementation implements UsersService {
             throw new InvalidEntityException(
                     String.format("User with ID=\"%s\" does not exist.", user.getId()));
         }
+
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
 
         return repo.save(user);
     }

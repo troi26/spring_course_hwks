@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head('Add User')" />
 <body>
-    <div th:replace="fragments/menu :: menu(${path})" />
+    <div th:replace="fragments/menu :: menu(${path}, ${logged})" />
     <div class="container">
-        <h3 th:text="${title}">Add New Post</h3>
+        <h3 th:text="${title}">Add New User</h3>
         <form th:object="${user}" method="post"
               class="form-horizontal col-md-9 col-lg-6" enctype="multipart/form-data">
             <div th:if="${user.id} != null" class="form-group row">
@@ -54,45 +54,17 @@
             <div class="form-group row">
                 <label path="password" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10">
-                    <input type="password" th:value="*{password}" id="password" name="password"
+                    <input type="password" th:value="null" id="password" name="password"
                            class="form-control" title="Password" th:errorclass="field-error">
                 </div>
             </div>
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                class="errors alert alert-danger offset-sm-2 col-sm-10">
                 Password error
-            </p><div class="form-group row">
-            <label path="status" class="col-sm-2 col-form-label">Status</label>
-            <div class="col-sm-10">
-                <!--<textarea class="form-control" title="Keywords" th:errorclass="field-error"
-                          th:value="*{keyWords}" id="keywords" name="keywords" cols="50" rows="5"></textarea>-->
-                <div class="col-sm-12 form-check form-check-inline">
-                    <label path="active_opt" class="col-sm-2 col-form-label">Activate</label>
-                    <div class="col-sm-10">
-                        <input type="radio" th:value="*{true}" th:checked="*{status}"  id="active_opt" name="status"
-                               class="form-control" title="Status" th:errorclass="field-error">
-                    </div>
-                </div>
-                <div class="col-sm-12 form-check form-check-inline">
-                    <label path="disabled_opt" class="col-sm-2 col-form-label">Disabled</label>
-                    <div class="col-sm-10">
-                        <input type="radio" th:value="*{false}" th:checked="*{!status}" id="disabled_opt" name="status"
-                               class="form-control" title="Status" th:errorclass="field-error">
-                    </div>
-                </div>
-                <!--<input type="radio" th:value="*{status}" id="disabled_opt" name="active"
-                       class="form-control" title="Status" th:errorclass="field-error">Disabled-->
-            </div>
-        </div>
-            <p th:if="${#fields.hasErrors('status')}" th:errors="*{status}"
-               class="errors alert alert-danger offset-sm-2 col-sm-10">
-                Incorrect status
             </p>
         <div class="form-group row">
             <label path="roles" class="col-sm-2 col-form-label">Roles</label>
             <div class="col-sm-10">
-                <!--<textarea class="form-control" title="Keywords" th:errorclass="field-error"
-                          th:value="*{keyWords}" id="keywords" name="keywords" cols="50" rows="5"></textarea>-->
                 <div class="col-sm-12 form-check form-check-inline">
                     <label path="admin_opt" class="col-sm-2 col-form-label">Admin</label>
                     <div class="col-sm-10">
@@ -107,8 +79,6 @@
                                class="form-control" title="Roles" th:errorclass="field-error">
                     </div>
                 </div>
-                <!--<input type="radio" th:value="*{status}" id="disabled_opt" name="active"
-                       class="form-control" title="Status" th:errorclass="field-error">Disabled-->
             </div>
         </div>
             <p th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"
@@ -116,8 +86,7 @@
                 Incorrect status
             </p>
 
-            <input type="hidden" th:value="null" id="pictureUrl" name="pictureUrl" title="Article picture URL">
-            <!--<input type="hidden" th:value="*{}" id="created" name="created" title="Article creation date and time">-->
+            <input type="hidden" th:value="null" id="avatarUrl" name="avatarUrl" title="User avatar URL">
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Picture</label>
@@ -135,18 +104,10 @@
             <div class="form-group row">
                 <div class="offset-sm-2 col-sm-10">
                     <button type="submit" class="btn btn-primary" id="submit" name="submit" value="submit">Submit</button>
-                    <button type="reset" class="btn btn-danger">Reset</button>
                     <a th:href="${'/users'}" class="btn btn-secondary" id="cancel">Cancel</a>
                 </div>
             </div>
 
-            <!--<div class="col-xs-12 alert alert-danger" th:if="${myErrors != null}">-->
-                <!--<p>Validation errors: </p>-->
-                <!--<ul th:each="error: ${myErrors}">-->
-                    <!--&lt;!&ndash;/*@thymesVar id="error" type=""*/&ndash;&gt;-->
-                    <!--<li th:text="${error}"></li>-->
-                <!--</ul>-->
-            <!--</div>-->
         </form>
         <div  th:replace="fragments/foot :: foot" />
     </div>

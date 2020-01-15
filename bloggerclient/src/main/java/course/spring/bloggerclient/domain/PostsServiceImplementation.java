@@ -3,8 +3,10 @@ package course.spring.bloggerclient.domain;
 import course.spring.bloggerclient.exception.InvalidEntityException;
 import course.spring.bloggerclient.exception.NonexisitngEntityException;
 import course.spring.bloggerclient.model.Post;
+import course.spring.bloggerclient.model.User;
 import course.spring.bloggerclient.repo.PostsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,7 @@ public class PostsServiceImplementation implements PostsService {
     PostsRepository repo;
 
     @Override
+    @PostFilter("hasRole('ADMIN') or filterObject.author.email == authentication.principal.email")
     public List<Post> findAll() {
         return repo.findAll();
     }
