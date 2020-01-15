@@ -88,8 +88,8 @@
                     </div>
                 </div>
             </div>
-            <p th:if="${fileError != null}" class="errors alert alert-danger offset-sm-2 col-sm-10">
-                <span th:text="${fileError}"></span>
+            <p th:if="${fileError != null}" th:errors="${fileError}" class="errors alert alert-danger offset-sm-2 col-sm-10">
+<!--                <span th:text="${fileError}"></span>-->
             </p>
 
             <div class="form-group row">

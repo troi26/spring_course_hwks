@@ -1,5 +1,6 @@
 package course.spring.bloggerclient.config;
 
+import course.spring.bloggerclient.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
@@ -8,6 +9,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -47,9 +50,12 @@ public class WebConfig implements WebMvcConfigurer {
                     Object object,
                     Exception ex) {
                 ModelAndView modelAndView = new ModelAndView("errors");
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                User user = (User) authentication.getPrincipal();
                 if (ex instanceof MaxUploadSizeExceededException) {
                     log.error("Max upload size exceeded error:", ex);
                     modelAndView.getModel().put("message", ex.getMessage());
+                    modelAndView.addObject("logged", user);
                 }
                 return modelAndView;
             }
